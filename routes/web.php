@@ -18,3 +18,19 @@ $router->get(
         'as'   => 'main-home'
     ]
 );
+
+$router->get(
+    '/categories',
+    [
+        'uses' => 'CategoryController@list',
+        'as'   => 'category-list'
+    ]
+);
+
+$router->get(
+    '/categories/{id}',
+    [
+        'uses' => 'CategoryController@item',
+        'as'   => 'category-item'
+    ]
+);
