@@ -60,5 +60,51 @@ class TaskController extends Controller
         }
 
     }
+    /**
+     * Return a task from a specific Id
+     *
+     * @param [int] $taskId
+     * @return $task
+     */
+    public function item($taskId)
+    {
+        $task = Task::find($taskId);
+        return $task;
+
+    }
+
+    /**
+     * Update the entry associates to the id
+     *
+     * @param Request $request
+     * @param int $id
+     * @return void
+     */
+    public function update(Request $request, int $id)
+    {
+        // On récupére la tâche que l'on veux modifier grâce à la méthode item
+        $currentTask = $this->item($id);
+
+        if (isset($currentTask)) {
+
+        // On récupére les nouvelles informations
+            $input = $request->all();
+
+            $currentTask->title = $request->title;
+            $currentTask->category_id = $request->categoryId;
+            $currentTask->completion = $request->completion;
+            $currentTask->status = $request->status;
+
+            // On sauvegarde l'enregistrement
+            if ($currentTask->save()) {
+                return response()->json($currentTask, Response::HTTP_OK);
+            } else {
+                return response()->json($currentTask, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        } else
+        {
+            return response()->json($currentTask, Response::HTTP_NOT_FOUND);
+        }
+    }
 
 }

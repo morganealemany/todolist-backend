@@ -68,3 +68,19 @@ $router->post(
         'as'   => 'task-store'
     ]
 );
+
+$router->get(
+    '/tasks/{id}',
+    [
+        'uses' => 'TaskController@item',
+        'as'   => 'task-item'
+    ]
+);
+
+$router->put(
+    '/tasks/{id}',
+    [
+        'uses' => 'TaskController@update',
+        'as'   => 'task-update'
+    ]
+    );
