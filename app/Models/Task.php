@@ -17,4 +17,5 @@ class Task extends Model
     // protected $table = 'mon_nom_de_table';
     // A partir des champs de la table 'tasks', Eloquent va déduire
     // automatiquement les propriétés du modèle Task !
+
 }

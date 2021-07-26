@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 // use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class TaskController extends Controller
 {
@@ -27,49 +30,35 @@ class TaskController extends Controller
         return $this->sendJsonResponse($tasksList);
     }
 
-
-    public function item($taskId)
+    /**
+     * store a new task
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function store(Request $request)
     {
-        // Attention avec les dump côté API
-        // car si je dump, j'envoie des headers classiques text/html
-        // hors on voudra renvoyer du JSON (application/json)
-        // Les dump doivent être utilisés de façon temporaire
-        // et enlever dès qu'on peut pour éviter les problèmes
-        // avec le front (code js)
-        // dump($taskId);
+        $input = $request->all();
 
-        $tasksList = [
-            1 => [
-              'id' => 1,
-              'name' => 'Chemin vers O\'clock',
-              'status' => 1
-            ],
-            2 => [
-              'id' => 2,
-              'name' => 'Courses',
-              'status' => 1
-            ],
-            3 => [
-              'id' => 3,
-              'name' => 'O\'clock',
-              'status' => 1
-            ],
-            4 => [
-              'id' => 4,
-              'name' => 'Titre Professionnel',
-              'status' => 1
-            ]
-        ];
+        // Création d'un nouvel objet Task
+        $task = new Task;
 
-        if (array_key_exists($taskId, $tasksList)) {
-        // if (isset($tasksList[$TaskId])) {
-            // On récupère la catégorie à retourner
-            $taskToReturn = $tasksList[$taskId];
+        // Remplissage de l'objet avec les informations récupérées en POST
+        $task->title = $request->title;
+        $task->category_id = $request->categoryId;
+        $task->completion = $request->completion;
+        $task->status = $request->status;
 
-            // On retourne la réponse au format JSON
-            return response()->json($taskToReturn);
-        } else {
-            abort(404);
+        // On sauvegarde l'enregistrement
+        if ($task->save()) {
+            echo $task;
+            return response()->json($task, Response::HTTP_CREATED);
         }
+         else
+        {
+            return response()->json($task,Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
+
 }

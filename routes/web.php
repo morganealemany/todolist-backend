@@ -61,10 +61,10 @@ $router->get(
     ]
 );
 
-$router->get(
-    '/tasks/{id}',
+$router->post(
+    '/tasks',
     [
-        'uses' => 'TaskController@item',
-        'as'   => 'task-item'
+        'uses' => 'TaskController@store',
+        'as'   => 'task-store'
     ]
 );
