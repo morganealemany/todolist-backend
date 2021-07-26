@@ -14,11 +14,17 @@
 $router->get(
     '/',
     [
+        // NomDuContrôleur@NomDeLaMéthode
         'uses' => 'MainController@home',
+        // 'identifiant-de-la-route'
         'as'   => 'main-home'
     ]
 );
 
+// URL : /categories
+// HTTP Method : GET
+// Controller : CategoryController
+// Method : list
 $router->get(
     '/categories',
     [
@@ -27,6 +33,10 @@ $router->get(
     ]
 );
 
+// URL : /categories/[id] où [id] est une portion dynamique de l'URL
+// HTTP Method : GET
+// Controller : CategoryController
+// Method : item
 $router->get(
     '/categories/{id}',
     [

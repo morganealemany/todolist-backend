@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 class MainController extends Controller
 {
     /**
-     * HTTP Méthod : GET
-     * url : '/'
-     *
-     * @return void
+     * HTTP method : GET
+     * URL : '/'
      */
     public function home()
     {
-        echo "Je suis sur la page d'accueil";
+        return "Je suis sur la page d'accueil";
     }
 }

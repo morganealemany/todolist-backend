@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 class CategoryController extends Controller
 {
     /**
-     * HTTP Méthod : GET
-     * url : '/categories'
-     *
-     * @return void
+     * HTTP method : GET
+     * URL : '/categories'
      */
     public function list()
     {
@@ -33,18 +31,31 @@ class CategoryController extends Controller
               'name' => 'Titre Professionnel',
               'status' => 1
             ]
-          ];
+        ];
 
-          return $categoriesList;
+        // https://laravel.com/docs/8.x/responses#strings-arrays
+        // Par défaut si on retourne un array, Lumen va le retourner
+        // encoder au format JSON
+        // return $categoriesList;
+
+        // Mais on peut aussi utiliser https://lumen.laravel.com/docs/8.x/responses#json-responses
+        // ce qui pourra être utile si on veut renvoyer des données
+        // qui ne sont pas de type array
+        return response()->json($categoriesList);
     }
 
     /**
-     * HTTP Méthod : GET
-     * url : '/categories/{id}'
-     *
-     * @return void
+     * HTTP method : GET
+     * URL : '/categories/{id}'
      */
-    public function item($categoryId) {
+    public function item($categoryId)
+    {
+        // Attention avec les dump côté API
+        // car si je dump, j'envoie des headers classiques text/html
+        // hors on voudra renvoyer du JSON (application/json)
+        // Les dump doivent être utilisés de façon temporaire
+        // et enlever dès qu'on peut pour éviter les problèmes
+        // avec le front (code js)
         // dump($categoryId);
 
         $categoriesList = [
@@ -68,20 +79,17 @@ class CategoryController extends Controller
               'name' => 'Titre Professionnel',
               'status' => 1
             ]
-          ];
+        ];
 
-          if (array_key_exists($categoryId, $categoriesList)) {
-
+        if (array_key_exists($categoryId, $categoriesList)) {
+        // if (isset($categoriesList[$categoryId])) {
             // On récupère la catégorie à retourner
             $categoryToReturn = $categoriesList[$categoryId];
 
             // On retourne la réponse au format JSON
             return response()->json($categoryToReturn);
-
-          } else {
-              abort(404);
-          }
-
+        } else {
+            abort(404);
+        }
     }
-
 }
