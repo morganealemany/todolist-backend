@@ -89,22 +89,57 @@ class TaskController extends Controller
 
         // On récupére les nouvelles informations
             $input = $request->all();
+            // dump($request->getMethod());
 
-            $currentTask->title = $request->title;
-            $currentTask->category_id = $request->categoryId;
-            $currentTask->completion = $request->completion;
-            $currentTask->status = $request->status;
-
-            // On sauvegarde l'enregistrement
-            if ($currentTask->save()) {
-                return response()->json($currentTask, Response::HTTP_OK);
-            } else {
-                return response()->json($currentTask, Response::HTTP_INTERNAL_SERVER_ERROR);
+            // Si la méthode HTTP est PATCH
+            if ($request->getMethod() === 'PATCH')
+            {
+                // On vérifie qu'au moins une nouvelle information est fournie
+                if ($request->has('title') || $request->has('categoryId') || $request->has('completion') || $request->has('status'))
+                {
+                    if (isset($request->title)) {
+                        $currentTask->title = $request->title;
+                    }
+                    if (isset($request->categoryId)) {
+                        $currentTask->category_id = $request->categoryId;
+                    }
+                    if (isset($request->completion)) {
+                        $currentTask->completion = $request->completion;
+                    }
+                    if (isset($request->status)) {
+                        $currentTask->status = $request->status;
+                    }
+                };
             }
-        } else
-        {
-            return response()->json($currentTask, Response::HTTP_NOT_FOUND);
-        }
+            // Sinon c'est que la méthode HTTP est de type PUT
+            else
+            {
+                // On vérifie que toutes les informations sont bien renseignées
+                if ($request->has(['title', 'categoryId', 'completion', 'status'])) {
+                    //
+                    $currentTask->title = $request->title;
+                    $currentTask->category_id = $request->categoryId;
+                    $currentTask->completion = $request->completion;
+                    $currentTask->status = $request->status;
+                }
+                // Sinon c'est qu'il manque des données
+                else
+                {
+                    // On retourne un statut HTTP 400
+                    return response()->json($currentTask, Response::HTTP_BAD_REQUEST);
+                }
+            }
+                // On sauvegarde l'enregistrement
+                if ($currentTask->save()) {
+                    return response()->json($currentTask, Response::HTTP_OK);
+                } else {
+                    return response()->json($currentTask, Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
+            } else
+            {
+                return response()->json($currentTask, Response::HTTP_NOT_FOUND);
+            }
+
     }
 
 }

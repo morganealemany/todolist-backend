@@ -83,4 +83,12 @@ $router->put(
         'uses' => 'TaskController@update',
         'as'   => 'task-update'
     ]
-    );
+);
+
+$router->patch(
+    '/tasks/{id}',
+    [
+        'uses' => 'TaskController@update',
+        'as'   => 'task-update'
+    ]
+);
