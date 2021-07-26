@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use Illuminate\Support\Facades\DB;
+
 class CategoryController extends Controller
 {
     /**
@@ -10,28 +13,8 @@ class CategoryController extends Controller
      */
     public function list()
     {
-        $categoriesList = [
-            1 => [
-              'id' => 1,
-              'name' => 'Chemin vers O\'clock',
-              'status' => 1
-            ],
-            2 => [
-              'id' => 2,
-              'name' => 'Courses',
-              'status' => 1
-            ],
-            3 => [
-              'id' => 3,
-              'name' => 'O\'clock',
-              'status' => 1
-            ],
-            4 => [
-              'id' => 4,
-              'name' => 'Titre Professionnel',
-              'status' => 1
-            ]
-        ];
+        $categoriesList = Category::all();
+        // dump($categoriesList);
 
         // https://laravel.com/docs/8.x/responses#strings-arrays
         // Par défaut si on retourne un array, Lumen va le retourner
@@ -41,7 +24,8 @@ class CategoryController extends Controller
         // Mais on peut aussi utiliser https://lumen.laravel.com/docs/8.x/responses#json-responses
         // ce qui pourra être utile si on veut renvoyer des données
         // qui ne sont pas de type array
-        return response()->json($categoriesList);
+        // return response()->json($categoriesList);
+        return $this->sendJsonResponse($categoriesList);
     }
 
     /**
