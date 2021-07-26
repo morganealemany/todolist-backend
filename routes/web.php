@@ -20,6 +20,9 @@ $router->get(
         'as'   => 'main-home'
     ]
 );
+//=================================================
+//                  CATEGORY
+//=================================================
 
 // URL : /categories
 // HTTP Method : GET
@@ -42,5 +45,26 @@ $router->get(
     [
         'uses' => 'CategoryController@item',
         'as'   => 'category-item'
+    ]
+);
+
+//=================================================
+//                  TASK
+//=================================================
+
+
+$router->get(
+    '/tasks',
+    [
+        'uses' => 'TaskController@list',
+        'as'   => 'task-list'
+    ]
+);
+
+$router->get(
+    '/tasks/{id}',
+    [
+        'uses' => 'TaskController@item',
+        'as'   => 'task-item'
     ]
 );
