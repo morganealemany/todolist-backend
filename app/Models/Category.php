@@ -19,6 +19,17 @@ class Category extends Model
     // automatiquement les propriétés du modèle Category !
 
 
+    // En écrivant cette méthode, cela permet de définir une relation
+    // entre les modèles Category et Task
+    //
+    // Grâce à cette relation :
+    //   => Eloquent sera capable d'aller chercher à la demande toutes
+    // les tâches liées à une catégorie
+    //
+    // Et comme il peut y avoir plusieurs tâches dans une catégorie donnée :
+    //  => on a donc une relation de type One to Many
+    //
+    // https://laravel.com/docs/6.x/eloquent-relationships#one-to-many
     public function tasks()
     {
         return $this->hasMany('App\Models\Task');

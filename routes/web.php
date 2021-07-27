@@ -20,9 +20,6 @@ $router->get(
         'as'   => 'main-home'
     ]
 );
-//=================================================
-//                  CATEGORY
-//=================================================
 
 // URL : /categories
 // HTTP Method : GET
@@ -48,11 +45,10 @@ $router->get(
     ]
 );
 
-//=================================================
-//                  TASK
-//=================================================
-
-
+// URL : /tasks
+// HTTP Method : GET
+// Controller : TaskController
+// Method : list
 $router->get(
     '/tasks',
     [
@@ -61,6 +57,10 @@ $router->get(
     ]
 );
 
+// URL : /tasks
+// HTTP Method : POST
+// Controller : TaskController
+// Method : add
 $router->post(
     '/tasks',
     [
@@ -69,14 +69,10 @@ $router->post(
     ]
 );
 
-$router->get(
-    '/tasks/{id}',
-    [
-        'uses' => 'TaskController@item',
-        'as'   => 'task-item'
-    ]
-);
-
+// URL : /tasks/{id}
+// HTTP Method : PUT
+// Controller : TaskController
+// Method : update
 $router->put(
     '/tasks/{id}',
     [
@@ -85,10 +81,14 @@ $router->put(
     ]
 );
 
+// URL : /tasks/{id}
+// HTTP Method : PATCH
+// Controller : TaskController
+// Method : update
 $router->patch(
     '/tasks/{id}',
     [
         'uses' => 'TaskController@update',
-        'as'   => 'task-update'
+        'as'   => 'task-patch'
     ]
 );
