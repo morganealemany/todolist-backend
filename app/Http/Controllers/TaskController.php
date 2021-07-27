@@ -3,43 +3,34 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-// use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class TaskController extends Controller
 {
+    /**
+     * List of all tasks
+     *
+     * @return
+     */
     public function list()
     {
 
         $tasksList = Task::all();
         // dump($tasksList);
 
-        // https://laravel.com/docs/8.x/responses#strings-arrays
-        // Par défaut si on retourne un array, Lumen va le retourner
-        // encoder au format JSON
-        // return $tasksList;
-
-        // Mais on peut aussi utiliser https://lumen.laravel.com/docs/8.x/responses#json-responses
-        // ce qui pourra être utile si on veut renvoyer des données
-        // qui ne sont pas de type array
-        // return response()->json($tasksList);
-
-        // On utilise notre méthode utilitaire pour retourner la liste des catégories
         return $this->sendJsonResponse($tasksList);
     }
 
     /**
-     * store a new task
+     * Add a new task
      *
      * @param Request $request
      * @return void
      */
-    public function store(Request $request)
+    public function add(Request $request)
     {
-        $input = $request->all();
-
         // Création d'un nouvel objet Task
         $task = new Task;
 
@@ -51,7 +42,6 @@ class TaskController extends Controller
 
         // On sauvegarde l'enregistrement
         if ($task->save()) {
-            echo $task;
             return response()->json($task, Response::HTTP_CREATED);
         }
          else
@@ -87,10 +77,6 @@ class TaskController extends Controller
 
         if (isset($currentTask)) {
 
-        // On récupére les nouvelles informations
-            $input = $request->all();
-            // dump($request->getMethod());
-
             // Si la méthode HTTP est PATCH
             if ($request->getMethod() === 'PATCH')
             {
@@ -115,7 +101,7 @@ class TaskController extends Controller
             else
             {
                 // On vérifie que toutes les informations sont bien renseignées
-                if ($request->has(['title', 'categoryId', 'completion', 'status'])) {
+                if ($request->filled(['title', 'categoryId', 'completion', 'status'])) {
                     //
                     $currentTask->title = $request->title;
                     $currentTask->category_id = $request->categoryId;

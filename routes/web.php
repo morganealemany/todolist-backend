@@ -64,8 +64,8 @@ $router->get(
 $router->post(
     '/tasks',
     [
-        'uses' => 'TaskController@store',
-        'as'   => 'task-store'
+        'uses' => 'TaskController@add',
+        'as'   => 'task-add'
     ]
 );
 
