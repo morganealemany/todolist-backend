@@ -17,4 +17,10 @@ class Category extends Model
     // protected $table = 'mon_nom_de_table';
     // A partir des champs de la table 'categories', Eloquent va déduire
     // automatiquement les propriétés du modèle Category !
+
+
+    public function tasks()
+    {
+        return $this->hasMany('App\Models\Task');
+    }
 }

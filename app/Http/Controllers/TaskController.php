@@ -17,7 +17,10 @@ class TaskController extends Controller
     public function list()
     {
 
-        $tasksList = Task::all();
+        // $tasksList = Task::all();
+        // dump($tasksList);
+
+        $tasksList = Task::all()->load('category');
         // dump($tasksList);
 
         return $this->sendJsonResponse($tasksList);
